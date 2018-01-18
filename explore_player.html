@@ -1,0 +1,917 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>무제 문서</title>
+<link rel="stylesheet" href="fonts/SegoeMDL2Assets.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<style type="text/css">
+	
+	/* 설정 */
+	* {
+		font-family: "Segoe UI Light", Segoe, "Segoe UI", "맑은 고딕", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
+		outline: none;
+	}
+	body {
+		color: #282828;
+		margin: 0;
+		padding: 0;
+	}
+	
+	/* UI */
+	.ui-slider {
+		position: relative;
+		text-align: left;
+		
+		background-color: rgba(255, 255, 255, .5);
+	}
+	.ui-slider .ui-slider-handle {
+		position: absolute;
+		z-index: 2;
+		width: 18px;
+		height: 18px;
+		cursor: default;
+		-ms-touch-action: none;
+		touch-action: none;
+		
+		background-color: #282828;
+		border: 2px solid #fff;
+		border-radius: 50%;
+		box-sizing: border-box;
+		transition: background-color 400ms;
+	}
+	.ui-slider .ui-slider-handle:hover {
+		background-color: #fff;
+	}
+	
+	.ui-slider .ui-slider-range {
+		position: absolute;
+		z-index: 1;
+		display: block;
+		border: 0;
+		background-position: 0 0;
+		
+		background-color: #fff;
+	}
+	.ui-slider.ui-state-disabled .ui-slider-handle,
+	.ui-slider.ui-state-disabled .ui-slider-range {
+		filter: inherit;
+	}
+	.ui-slider-horizontal {
+		height: 2px;
+		
+		border-top: 8px solid #282828;
+		border-bottom: 8px solid #282828;
+		width: 100%;
+	}
+	.ui-slider-horizontal .ui-slider-handle {
+		top: -8px;
+		margin-left: -9px;
+	}
+	.ui-slider-horizontal .ui-slider-handle:active {
+		background-color: #fff;
+		width: 30px;
+		height: 30px;
+		top: -14px;
+		margin-left: -15px;
+	}
+	.ui-slider-horizontal .ui-slider-range {
+		top: 0;
+		height: 100%;
+	}
+	.ui-slider-horizontal .ui-slider-range-min {
+		left: 0;
+	}
+	.ui-slider-horizontal .ui-slider-range-max {
+		right: 0;
+	}
+	.ui-slider-vertical {
+		width: 2px;
+		height: 100%;
+		
+		border-right: 8px solid #282828;
+		border-left: 8px solid #282828;
+	}
+	.ui-slider-vertical .ui-slider-handle {
+		left: -8px;
+		margin-left: 0;
+		margin-bottom: -9px;
+	}
+	.ui-slider-vertical .ui-slider-handle:active {
+		left: -14px;
+		margin-left: 0;
+		margin-bottom: -15px;
+		
+		background-color: #fff;
+		width: 30px;
+		height: 30px;
+	}
+	.ui-slider-vertical .ui-slider-range {
+		left: 0;
+		width: 100%;
+	}
+	.ui-slider-vertical .ui-slider-range-min {
+		bottom: 0;
+	}
+	.ui-slider-vertical .ui-slider-range-max {
+		top: 0;
+	}
+	
+	/* 탐색 */
+	.explore {
+		background-color: #282828;
+		box-sizing: border-box;
+		font-size: 0;
+
+		position: absolute;
+		top: 0;
+		right: 0;
+		left: 0;
+		z-index: 3;
+	}
+	.explore a {
+		border-bottom: 4px solid transparent;
+		color: #fff;
+		display: inline-block;
+		font-size: 16px;
+		line-height: 66px;
+		padding: 0 10px;
+		text-decoration: none;
+	}
+	.explore a:hover {
+		color: rgba(255, 255, 255, .5);
+	}
+	.explore a.active {
+		border-bottom: 4px solid #fff;
+	}
+	.explore--search {
+		float: right;
+	}
+	.explore--playlists::before {
+		content: '';
+		display: inline-block;
+		width: 24px;
+		height: 24px;
+		background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 32 32" style="fill:#ffffff;"><g id="surface1"><path style=" " d="M 23 4.53125 L 23 19.5625 C 22.410156 19.222656 21.730469 19 21 19 C 18.789063 19 17 20.789063 17 23 C 17 25.210938 18.789063 27 21 27 C 23.210938 27 25 25.210938 25 23 L 25 7.5 L 28.625 8.9375 L 29.375 7.0625 L 24.375 5.0625 Z M 5 5 L 5 7 L 21 7 L 21 5 Z M 5 10 L 5 12 L 21 12 L 21 10 Z M 5 15 L 5 17 L 21 17 L 21 15 Z M 5 20 L 5 22 L 15.09375 22 C 15.214844 21.28125 15.460938 20.609375 15.8125 20 Z M 5 25 L 5 27 L 16.53125 27 C 16.011719 26.421875 15.609375 25.746094 15.34375 25 Z "></path></g></svg>') 50% 50% no-repeat;
+		background-size: 100%;
+		margin-right: 8px;
+		margin-top: -4px;
+		vertical-align: middle;
+	}
+	.explore--meloncharts::before {
+		content: '';
+		display: inline-block;
+		width: 24px;
+		height: 24px;
+		background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 32 32" style="fill:#ffffff;"><g id="surface1"><path style=" " d="M 5.96875 3 L 5.65625 3.34375 C 5.65625 3.34375 4.898438 4 4.40625 4 L 4.40625 6 C 5.085938 6 5.554688 5.722656 6 5.46875 L 6 10 L 8 10 L 8 3 Z M 11 6 L 11 8 L 28 8 L 28 6 Z M 6.5 12 C 5.117188 12 4 13.117188 4 14.5 L 4 15 L 6 15 L 6 14.5 C 6 14.285156 6.285156 14 6.5 14 C 6.714844 14 7 14.285156 7 14.5 L 6.90625 14.59375 L 4.3125 17.09375 L 4 17.375 L 4 19 L 9 19 L 9 17 L 7.28125 17 L 8.15625 16.125 L 8.28125 16.03125 L 8.25 16 C 8.75 15.589844 9 14.980469 9 14.5 C 9 13.117188 7.882813 12 6.5 12 Z M 11 15 L 11 17 L 28 17 L 28 15 Z M 4 21 L 4 23 L 5.375 23 L 5.125 23.40625 L 5 23.625 L 5 25 L 6.5 25 C 6.714844 25 7 25.285156 7 25.5 C 7 25.714844 6.714844 26 6.5 26 L 4 26 L 4 28 L 6.5 28 C 7.882813 28 9 26.882813 9 25.5 C 9 24.496094 8.320313 23.804688 7.46875 23.40625 L 7.875 22.71875 L 8 22.46875 L 8 21 Z M 11 24 L 11 26 L 28 26 L 28 24 Z "></path></g></svg>') 50% 50% no-repeat;
+		background-size: 100%;
+		fill: currentColor;
+		margin-right: 7px;
+		margin-top: -4px;
+		vertical-align: middle;
+	}
+	.explore--search::before {
+		content: '\E721';
+		font: 20px 'Segoe MDL2 Assets';
+		margin-right: 11px;
+		vertical-align: text-bottom;
+	}
+	.explore--playlists:hover::before, .explore--meloncharts:hover::before {
+		opacity: .5;
+	}
+	
+	/* 음악 재생 */
+	.player {
+		align-items: center;
+		background-color: #282828;
+		color: #fff;
+		display: flex;
+		justify-content: space-between;
+		
+		position: fixed;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		z-index: 4;
+	}
+	.primary-player {
+		align-items: center;
+		display: inline-flex;
+		justify-content: flex-start;
+		width: 400px;
+	}
+	.primary-player img {
+		background-color: #fff;
+		height: 50px;
+		margin: 10px;
+		width: 50px;
+	}
+	.player--title {
+		font-size: 16px;
+		margin: 0;
+	}
+	.player--artist {
+		font-size: 12px;
+		margin: 0;
+	}
+	.secondary-player {
+		align-items: center;
+		display: inline-flex;
+		flex: 1;
+		justify-content: center;
+	}
+	.player--currentTime, .player--duration {
+		margin: 10px;
+	}
+	.player--seek-box {
+		flex: 1;
+		margin: 10px;
+	}
+	.tertiary-player {
+		align-items: center;
+		display: inline-flex;
+		justify-content: flex-end;
+	}
+	.tertiary-player a {
+		border-radius: 50%;
+		font: 20px 'Segoe MDL2 Assets';
+		margin-right: 10px;
+		padding: 10px;
+	}
+	.tertiary-player a:hover {
+		color: rgba(255, 255, 255, .5);
+	}
+	/* player volume box (vertical)
+	.player--volume-box {
+		background-color: #282828;
+		box-shadow: 0 0 5px 0 #282828;
+		height: 100px;
+		padding: 19px 11px;
+		
+		position: absolute;
+		right: 10px;
+		bottom: 65px;
+	}
+	*/
+	.player--volume-box {
+		background-color: #282828;
+		display: block;
+		padding: 11px 19px;
+		width: 100px;
+
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 400ms, visibility 800ms;
+
+		position: absolute;
+		right: 10px;
+		bottom: 80px;
+		z-index: 5;
+	}
+	.player--volume:hover + .player--volume-box, .player--volume-box:hover {
+		opacity: 1;
+		visibility: visible;
+	}
+	.player--shuffle.active, .player--loop[data-loop="1"], .player--loop[data-loop="2"] {
+		background-color: rgba(255, 255, 255, .1);
+	}
+	.player--loop[data-loop="2"]::before {
+		content: '\E8ED';
+	}
+	.player--previous::before {
+		content: '\E892';
+	}
+	.player--play::before {
+		content: '\E768'; /* pause: E769 */
+	}
+	.player--next::before {
+		content: '\E893';
+	}
+	.player--shuffle::before {
+		content: '\E8B1';
+	}
+	.player--loop::before {
+		content: '\E8EE';
+	}
+	.player--volume::before {
+		content: '\E767';
+	}
+	.player--volume.mute::before {
+		content: '\E74F';
+	}
+
+	/* 재생 목록 */
+	.playlists {
+		background-color: #fff;
+		
+		position: absolute;
+		top: 70px;
+		right: 0;
+		bottom: 70px;
+		left: 0;
+		overflow: auto;
+		z-index: 1;
+	}
+	.playlists ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+	.playlists--item {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+	}
+	.playlists--item:hover {
+		background-color: rgba(0, 0, 0, .1);
+	}
+	.playlists--primary-item {
+		align-items: center;
+		display: inline-flex;
+		justify-content: flex-start;
+	}
+	.playlists--album {
+		background-color: #282828;
+		height: 50px;
+		margin: 10px;
+		width: 50px;
+	}
+	.playlists--title {
+		font-size: 16px;
+		margin: 0;
+	}
+	.playlists--artist {
+		font-size: 12px;
+		margin: 0;
+	}
+	.playlists--secondary-item {
+		display: inline-flex;
+		justify-content: flex-end;
+		margin-right: 10px;
+	}
+	.playlists--secondary-item a {
+		font: 20px 'Segoe MDL2 Assets';
+		line-height: 70px;
+		padding: 0 10px;
+	}
+	.playlists--secondary-item a:hover {
+		background-color: rgba(0, 0, 0, .1);
+	}
+	.playlists--play::before {
+		content: '\E768';
+	}
+	.playlists--delete::before {
+		content: '\E74D';
+	}
+	.playlists--download::before {
+		content: '\E896';
+	}
+
+	/* 멜론 차트 */
+	.meloncharts {
+		position: absolute;
+		top: 70px;
+		right: 0;
+		bottom: 70px;
+		left: 0;
+		overflow: auto;
+		z-index: 2;
+	}
+	.meloncharts ol {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+	.meloncharts--item {
+		align-items: center;
+		display: flex;
+		font-size: 16px;
+		justify-content: space-between;
+	}
+	.meloncharts--item:hover {
+		background-color: rgba(0, 0, 0, .1);
+	}
+	.meloncharts--counters {
+		margin-left: 10px;
+		width: 35px;
+	}
+	.meloncharts--primary-item {
+		display: inline-flex;
+		justify-content: flex-start;
+	}
+	.meloncharts--title {
+		font-size: 20px;
+		margin: 10px 0;
+		text-align: center;
+	}
+	.meloncharts--secondary-item {
+		display: inline-flex;
+		justify-content: flex-end;
+		margin-right: 10px;
+	}
+	.meloncharts--secondary-item a {
+		font: 20px 'Segoe MDL2 Assets';
+		line-height: 35px;
+		padding: 0 10px;
+	}
+	.meloncharts--secondary-item a:hover {
+		background-color: rgba(0, 0, 0, .1);
+	}
+	.meloncharts--play::before {
+		content: '\E768';
+	}
+	.meloncharts--add::before {
+		content: '\E710';
+	}
+	.meloncharts--download::before {
+		content: '\E896';
+	}
+	/* 검색 */
+	.search {
+		background-color: #fff;
+		padding-top: 70px;
+		
+		position: absolute;
+		top: 70px;
+		right: 0;
+		bottom: 70px;
+		left: 0;
+		overflow: auto;
+		z-index: 4;
+	}
+	.search ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+	.search--item {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+	}
+	.search--item:hover {
+		background-color: rgba(0, 0, 0, .1);
+	}
+	.search--primary-item {
+		align-items: center;
+		display: inline-flex;
+		justify-content: flex-start;
+	}
+	.search--album {
+		background-color: #282828;
+		height: 50px;
+		margin: 10px;
+		width: 50px;
+	}
+	.search--title {
+		font-size: 16px;
+		margin: 0;
+	}
+	.search--artist {
+		font-size: 12px;
+		margin: 0;
+	}
+	.search--secondary-item {
+		display: inline-flex;
+		justify-content: flex-end;
+		margin-right: 10px;
+	}
+	.search--secondary-item a {
+		font: 20px 'Segoe MDL2 Assets';
+		line-height: 70px;
+		padding: 0 10px;
+	}
+	.search--secondary-item a:hover {
+		background-color: rgba(0, 0, 0, .1);
+	}
+	.search--play::before {
+		content: '\E768';
+	}
+	.search--add::before {
+		content: '\E710';
+	}
+	.search--download::before {
+		content: '\E896';
+	}
+	.search--header {
+		background-color: #282828;
+		box-sizing: border-box;
+		padding: 10px;
+		width: 100%;
+		
+		position: fixed;
+		top: 0;
+	}
+	#search--text {
+		background-color: transparent;
+		border: 0;
+		box-sizing: border-box;
+		color: #fff;
+		font-size: 16px;
+		height: 50px;
+		padding: 0 10px;
+		width: 100%;
+	}
+	#search--text:hover, #search--text:focus {
+		background-color: rgba(255,255,255,.1);
+	}
+	.search--button {
+		background-color: transparent;
+		border: 0;
+		color: #fff;
+		height: 30px;
+		
+		position: absolute;
+		top: 20px;
+		right: 20px;
+	}
+	.search--button:hover {
+		color: rgba(255, 255, 255, .5);
+	}
+	.search--button::before {
+		content: '\E721';
+		font: 20px 'Segoe MDL2 Assets';
+		vertical-align: middle;
+	}
+	.search--alert {
+		display: none;
+		text-align: center;
+		width: 100%;
+	}
+	.search--alert h1 {
+		font-weight: normal;
+		font-size: 20px;
+		margin: 10px 0;
+	}
+	.search--alert p {
+		font-size: 16px;
+		margin: 10px 0;
+	}
+	.search--alert.show {
+		display: block;
+	}
+	.search--icon::before {
+		content: '\E721';
+		font: 20px 'Segoe MDL2 Assets';
+	}
+	.search--footer {
+		cursor: pointer;
+		line-height: 70px;
+		text-align: center;
+		width: 100%;
+	}
+	.search--footer:hover {
+		background-color: rgba(0, 0, 0, .1);
+	}
+	.search--footer::before {
+		content: '\E893';
+		font: 20px 'Segoe MDL2 Assets';
+		margin-right: 11px;
+		vertical-align: text-bottom;
+	}
+	.search--footer.disabled {
+		display: none;
+	}
+	
+	/* 공통 */
+	.hide {
+		display: none;
+	}
+	
+	@media (min-width: 1024px) {
+		.playlists, .meloncharts, .search--header {
+			width: 50%!important;
+		}
+		.search {
+			display: block!important;
+			width: 50%;
+			
+			top: 0;
+			left: 50%;
+		}
+	}
+	@media (max-width: 1023px) {
+		.playlists, .meloncharts, .search {
+			bottom: 171px;
+		}
+		.search--header {
+			top: 70px!important;
+		}
+		.player {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+		.primary-player {
+			width: 100%;
+		}
+		.secondary-player {
+			width: 100%;
+		}
+		.tertiary-player {
+			margin: 10px 0 10px 10px;
+		}
+		.player--volume-box {
+			left: 310px;
+			bottom: 10px;
+		}
+	}
+	@media screen and (max-width: 511px) {
+		.player--volume {
+			display: none;
+		}
+		.player--volume-box {
+			display: none;
+		}
+	}
+</style>
+</head>
+
+<body>
+<div class="container">
+<!-- 탐색 -->
+<div class="explore">
+	<a href="#" class="explore--playlists active">재생 목록</a>
+	<a href="#" class="explore--meloncharts">멜론 차트</a>
+	<a href="#" class="explore--search">검색</a>
+</div>
+	
+<!-- 재생 목록 -->
+<div class="playlists">
+	<ul>
+		<li class="playlists--item" data-music="000001">
+			<a class="playlists--primary-item">
+				<img class="playlists--album" alt="앨범 이미지">
+				<div class="playlists--music-info">
+					<p class="playlists--title">노래 제목</p>
+					<p class="playlists--artist">노래 아티스트</p>
+				</div>
+			</a>
+			<div class="playlists--secondary-item">
+				<a class="playlists--play" title="재생"></a>
+				<a class="playlists--download" title="다운로드"></a>
+				<a class="playlists--delete" title="삭제"></a>
+			</div>
+		</li>
+		<li class="playlists--item" data-music="000002">
+			<a class="playlists--primary-item">
+				<img class="playlists--album" alt="앨범 이미지">
+				<div class="playlists--music-info">
+					<p class="playlists--title">노래 제목</p>
+					<p class="playlists--artist">노래 아티스트</p>
+				</div>
+			</a>
+			<div class="playlists--secondary-item">
+				<a class="playlists--play" title="재생"></a>
+				<a class="playlists--download" title="다운로드"></a>
+				<a class="playlists--delete" title="삭제"></a>
+			</div>
+		</li>
+		<li class="playlists--item" data-music="000003">
+			<a class="playlists--primary-item">
+				<img class="playlists--album" alt="앨범 이미지">
+				<div class="playlists--music-info">
+					<p class="playlists--title">노래 제목</p>
+					<p class="playlists--artist">노래 아티스트</p>
+				</div>
+			</a>
+			<div class="playlists--secondary-item">
+				<a class="playlists--play" title="재생"></a>
+				<a class="playlists--download" title="다운로드"></a>
+				<a class="playlists--delete" title="삭제"></a>
+			</div>
+		</li>
+	</ul>
+</div>
+	
+<!-- 멜론 차트 -->
+<div class="meloncharts hide">
+	<p class="meloncharts--title">멜론 TOP100</p>
+	<ol>
+		<li class="meloncharts--item">
+			<a class="meloncharts--primary-item">노래 제목 - 노래 아티스트</a>
+			<div class="meloncharts--secondary-item">
+				<a class="meloncharts--play" title="재생"></a>
+				<a class="meloncharts--download" title="다운로드"></a>
+				<a class="meloncharts--add" title="삭제"></a>
+			</div>
+		</li>
+	</ol>
+</div>
+
+<!-- 검색 (목록) -->
+<div class="search hide">
+	<div class="search--header">
+		<input id="search--text" type="text" placeholder="검색">
+		<button class="search--button"></button>
+	</div>
+	<ul>
+		<li class="search--item">
+			<a class="search--primary-item">
+				<img class="search--album" alt="앨범 이미지">
+				<div class="search--music-info">
+					<p class="search--title">노래 제목</p>
+					<p class="search--artist">노래 아티스트</p>
+				</div>
+			</a>
+			<div class="search--secondary-item">
+				<a class="search--play" title="재생"></a>
+				<a class="search--download" title="다운로드"></a>
+				<a class="search--add" title="추가"></a>
+			</div>
+		</li>
+	</ul>
+	<div class="search--alert">
+		<p class="search--icon"></p>
+		<h1>맞춤법 확인 또는 다른 항목 검색</h1>
+		<p>다른 항목을 검색해 보십시오.</p>
+	</div>
+	<div class="search--footer disabled">다음</div>
+</div>
+
+<!-- 음악 재생 -->
+<div class="player">
+	<div class="primary-player">
+		<img alt="앨범 이미지">
+		<div class="player--nowplaying">
+			<p class="player--title">노래 제목</p>
+			<p class="player--artist">노래 아티스트</p>
+		</div>
+	</div>
+	<div class="secondary-player">
+		<div class="player--currentTime">00:00</div>
+		<div class="player--seek-box">
+			<div class="player--seek-slider"></div>
+		</div>
+		<div class="player--duration">00:00</div>
+	</div>
+	<div class="tertiary-player">
+		<a class="player--previous" title="이전"></a>
+		<a class="player--play" title="재생/일시 중지"></a>
+		<a class="player--next" title="다음"></a>
+		<a class="player--shuffle" title="셔플/셔플 해제"></a>
+		<a class="player--loop" title="모두 반복/하나 반복/반복 해제" data-loop="0"></a>
+		<a class="player--volume" title="음소거/음소거 해제"></a>
+		<div class="player--volume-box">
+			<div class="player--volume-slider"></div>
+		</div>
+	</div>
+</div>
+</div>
+</body>
+<script>
+var search_data = ["", 0];
+$(document).ready(function(){
+	
+	$("body").on("click", ".playlists--download, .search--download", function () {
+		var music = $(this).parent().parent().data("music");
+		download(music);
+	});
+	
+	$("body").on("click", ".search--add", function () {
+		var music = $(this).parent().parent().data("music");
+		add(music);
+		alert(music);
+	});
+	// 검색
+	$("#search--text").keypress(function( event ) {
+		if ( event.which === 13 ) {
+			event.preventDefault();
+			
+			var search_query = $("#search--text").val();
+			if (search_query.length < 2) {
+				alert("2자 이상 입력하세요.");
+			} else {
+				search_data = [search_query, 1];
+				search(search_query, 1);
+			}
+		}
+	});
+	$(".search--footer").click(function(){
+		search(search_data[0], ++search_data[1]);
+	});
+	
+
+	// 멜론 차트
+	$.get("./php/melon.php", function(data){
+		$(".meloncharts ol").html(data);
+	})
+	.fail(function() {
+		alert( "error" );
+	});
+	
+	$(".explore--playlists").click(function(){
+		$(".explore--playlists").addClass("active");
+		$(".explore--meloncharts, .explore--search, .playlists").removeClass("active hide");
+		$(".meloncharts, .search").addClass("hide");
+	});
+	
+	$(".explore--meloncharts").click(function(){
+		$(".explore--meloncharts").addClass("active");
+		$(".explore--playlists, .explore--search, .meloncharts").removeClass("active hide");
+		$(".playlists, .search").addClass("hide");
+	});
+	
+	$(".explore--search").click(function(){
+		//$(".explore--search").addClass("active");
+		//$(".explore--playlists, .explore--meloncharts, .search").removeClass("active hide");
+		$(".search").removeClass("hide");
+	});
+	
+    $( ".player--seek-slider" ).slider({
+      value: 50,
+      orientation: "horizontal",
+      range: "min",
+      animate: true
+    });
+    $( ".player--volume-slider" ).slider({
+      value: 50,
+      orientation: "horizontal",
+      range: "min",
+      animate: true
+    });
+});
+	
+	function add(music) {
+		alert("");
+		$( ".playlists--item" ).each(function( i ) {
+			if ( this.data("music") !== "000001" ) {
+				alert("중복 아님 ");
+			} else {
+				alert("중복 인가봐 ");
+			}
+		});
+	}
+	
+	function download(music) {
+		$.get( "./php/url.php", { query: music } )
+		.done(function( data ) {
+			if (data.url.length < 4) {
+				alert("다운 못해 쏴리 ");
+			} else {
+				var download_url = document.createElement("a");
+					download_url.download = music + ".mp3";
+					download_url.href = data.url;
+					download_url.target = "_blank";
+				document.body.appendChild(download_url);
+				download_url.click();
+				document.body.removeChild(download_url);
+				delete download_url;
+			}
+		})
+		.fail(function() {
+			alert( "error" );
+		});
+	}
+	
+	function search(query, page) {
+		if (page === 1) {
+			$(".search ul").html("");
+			$(".search--alert").removeClass("show");
+			$(".search--footer").addClass("disabled");
+		}
+		$.get( "./php/search.php", { query: query, page: page } )
+		.done(function( data ) {
+			if (data.length < 4) {
+				$(".search--alert").addClass("show");
+			} else {
+				var html = "", album_image, artists;
+				if (data.length < 20) {
+					$(".search--footer").addClass("disabled");
+				} else {
+					$(".search--footer").removeClass("disabled");
+				}
+				$.each( data, function( index, value ) {
+					album_image = "http://y.gtimg.cn/music/photo_new/T002R300x300M000" + value.pic_id + ".jpg?max_age=2592000";
+					artists = value.artist.join(", ");
+
+					html += '<li class="search--item" data-music="' + value.id + '">' +
+					'<a class="search--primary-item" title="' + value.name + ' - ' + artists + '">' +
+					'<img class="search--album" src="' + album_image + '" alt="' + value.album + '">' +
+					'<div class="search--music-info">' +
+					'<p class="search--title">' + value.name + '</p>' +
+					'<p class="search--artist">' + artists + '</p>' +
+					'</div>' +
+					'</a>' +
+					'<div class="search--secondary-item">' +
+					'<a class="search--play" title="재생"></a>' +
+					'<a class="search--download" title="다운로드"></a>' +
+					'<a class="search--add" title="추가"></a>' +
+					'</div>' +
+					'</li>';
+				});
+				$(".search ul").append( html );
+				/*
+				$("img").on("error", function() {
+					$( this ).attr( "src", "./img/default_thumbnail.png" );
+				})
+				*/
+			}
+		})
+		.fail(function() {
+			alert( "error" );
+		});
+	}
+</script>
+</html>
